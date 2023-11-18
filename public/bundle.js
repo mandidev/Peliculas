@@ -1,7 +1,9 @@
 'use strict';
 
-const fetchGeneros = async() => {
-    const url = 'https://api.themoviedb.org/3/genre/movie/list?api_key=5e0fe0122bea533a17eade33e2cae17d&lenguage=es-ES';
+const fetchGeneros = async(filtro = 'movie') => {
+    const tipo = filtro === 'movie' ? 'movie' : 'tv';
+    
+    const url = `https://api.themoviedb.org/3/genre/${tipo}/list?api_key=5e0fe0122bea533a17eade33e2cae17d&language=es`;
 
     try {
         const response = await fetch(url);
@@ -26,8 +28,9 @@ const obtenerGenero = (id, generos) => {
     return nombre;
 };
 
-const fetchPopulares = async() => {
-    const url = 'https://api.themoviedb.org/3/movie/popular?api_key=5e0fe0122bea533a17eade33e2cae17d&lenguage=es-ES&page=1';
+const fetchPopulares = async(filtro = 'movie') => {
+    const tipo = filtro === 'movie' ? 'movie' : 'tv';
+    const url = `https://api.themoviedb.org/3/${tipo}/popular?api_key=5e0fe0122bea533a17eade33e2cae17d&language=es-MX&page=1`;
 
     try {
         const response = await fetch(url);
@@ -47,9 +50,9 @@ const fetchPopulares = async() => {
 
 const cargarTitulo = (resultados) => {    
     const contenedor = document.querySelector('#populares .main__grid');
+    contenedor.innerHTML = '';
     
     resultados.forEach( (resultado) => {
-        console.log(resultado);
         const plantilla = `
             <div class="main__media">
                 <a href="#" class="main__media-thumb">
@@ -64,9 +67,56 @@ const cargarTitulo = (resultados) => {
     });
 };
 
-const cargar = async() => {
-    const resultados = await fetchPopulares();
+const contenedorGeneros = document.getElementById('filtro-generos');
+
+const cargarGeneros = async(filtro) => {
+    const generos = await fetchGeneros(filtro);
+    contenedorGeneros.innerHTML = '';
+
+    generos.forEach( (genero) => {
+        const btn = document.createElement('button');
+        btn.classList.add('btn');
+        btn.innerText = genero.name;
+        btn.setAttribute('data-id', genero.id);
+        contenedorGeneros.appendChild(btn);
+    });
+};
+
+const filtroPelicula = document.getElementById('movie');
+const filtroShow = document.getElementById('tv');
+
+
+
+filtroPelicula.addEventListener('click', async(e) => {
+    e.preventDefault();
+    cargarGeneros('movie');
+    const resultados = await fetchPopulares('movie');
     cargarTitulo(resultados);
+    filtroShow.classList.remove('btn--active');
+    filtroPelicula.classList.add('btn--active');
+    document.querySelector('#populares .main__titulo').innerText = 'Peliculas Populares';
+});
+
+
+
+filtroShow.addEventListener('click', async(e) => {
+    e.preventDefault();
+
+    cargarGeneros('tv');
+
+    const resultados = await fetchPopulares('tv');
+
+    cargarTitulo(resultados);
+    filtroPelicula.classList.remove('btn--active');
+    filtroShow.classList.add('btn--active');
+    document.querySelector('#populares .main__titulo').innerText = 'Series Populares';
+});
+
+const cargar = async() => {
+    const resultados = await fetchPopulares('movie');
+    cargarTitulo(resultados);
+    cargarGeneros('movie');
+
 };
 
 cargar();

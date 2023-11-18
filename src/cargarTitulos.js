@@ -1,8 +1,8 @@
 const cargarTitulo = (resultados) => {    
     const contenedor = document.querySelector('#populares .main__grid');
+    contenedor.innerHTML = '';
     
     resultados.forEach( (resultado) => {
-        console.log(resultado)
         const plantilla = `
             <div class="main__media">
                 <a href="#" class="main__media-thumb">
