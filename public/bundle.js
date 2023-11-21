@@ -112,6 +112,30 @@ filtroShow.addEventListener('click', async(e) => {
     document.querySelector('#populares .main__titulo').innerText = 'Series Populares';
 });
 
+const contenedor = document.getElementById('filtro-generos');
+
+contenedor.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    if(e.target.closest('button')) {
+        contenedor.querySelector('.btn--active')?.classList.remove('btn--active');
+
+        e.target.classList.add('btn--active');
+    }
+});
+
+const fetchBusqueda = () => {
+    document.querySelector('.main__filtros .btn--active')?.id;
+    document.querySelector('#filtro-generos .btn--active')?.dataset.id;
+    document.getElementById('year').value || 2023;
+};
+
+const btn = document.getElementById('btn-buscar');
+
+btn.addEventListener('click', (e) => {
+    fetchBusqueda();
+});
+
 const cargar = async() => {
     const resultados = await fetchPopulares('movie');
     cargarTitulo(resultados);

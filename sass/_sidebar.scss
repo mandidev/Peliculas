@@ -65,3 +65,19 @@
 		justify-content: center;
 	}
 }
+
+/* Media query para dispositivos móviles (menos de 768px de ancho) */
+@media (max-width: 767px) {
+	.sidebar {
+		width: 50%; /* Reducir el ancho de la barra lateral en tabletas */
+	}
+
+	.sidebar__contenedor-generos {
+		grid-template-columns: 1fr; /* Cambiar el grid de géneros a una sola columna */
+	}
+}
+
+/* Media query para ordenadores (más de 1024px de ancho) */
+@media (min-width: 1025px) {
+	/* No hace falta cambiar nada, se aplica el estilo por defecto */
+}

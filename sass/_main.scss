@@ -47,3 +47,27 @@
 		gap: 20px;
 	}
 }
+
+/* Media query para dispositivos móviles (menos de 768px de ancho) */
+@media (max-width: 767px) {
+	.main {
+		padding: 20px 40px; /* Reducir el padding para aprovechar el espacio */
+		margin-left: -160px;
+	}
+
+	.main__grid {
+		grid-template-columns: repeat(2, 1fr); /* Cambiar el grid a 2 columnas */
+	}
+}
+
+/* Media query para tabletas (entre 768px y 1024px de ancho) */
+@media (min-width: 768px) and (max-width: 1024px) {
+	.main__grid {
+		grid-template-columns: repeat(4, 1fr); /* Cambiar el grid a 4 columnas */
+	}
+}
+
+/* Media query para ordenadores (más de 1024px de ancho) */
+@media (min-width: 1025px) {
+	/* No hace falta cambiar nada, se aplica el estilo por defecto */
+}
