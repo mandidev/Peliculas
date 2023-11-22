@@ -1,7 +1,9 @@
+import cargarTitulo from "./cargarTitulos";
 import fetchBusqueda from "./fetchBusqueda";
 
 const btn = document.getElementById('btn-buscar');
 
-btn.addEventListener('click', (e) => {
-    fetchBusqueda()
+btn.addEventListener('click', async(e) => {
+   const resultados = await fetchBusqueda();
+   cargarTitulo(resultados);
 });
